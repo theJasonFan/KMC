@@ -14,7 +14,8 @@ OUT_INCLUDE_DIR = include
 
 ifeq ($(UNAME_S),Darwin)
 	CFLAGS	= -Wall -O3 -m64 -pthread -std=c++14
-	CLINK	= -lm -O3 -pthread -std=c++14
+	CLINK	= -lm -lbz2 -lc++ -lz -O3 -pthread -std=c++14
+	# CLINK	= -lm -static-libgcc -static-libstdc++ -O3 -pthread -std=c++14
 
 	PY_KMC_API_CFLAGS = -Wl,-undefined,dynamic_lookup -fPIC -Wall -shared -std=c++14 -O3
 else
@@ -49,13 +50,13 @@ $(KMC_MAIN_DIR)/kmc_runner.o
 ifeq ($(UNAME_S),Darwin)
 	RADULS_OBJS =
 
-	KMC_LIBS = \
-	$(KMC_MAIN_DIR)/libs/libz.1.2.5.dylib \
-	$(KMC_MAIN_DIR)/libs/libbz2.1.0.5.dylib
+	#KMC_LIBS = \
+	#$(KMC_MAIN_DIR)/libs/libz.1.2.5.dylib \
+	#$(KMC_MAIN_DIR)/libs/libbz2.1.0.5.dylib
 
-	KMC_TOOLS_LIBS = \
-	$(KMC_TOOLS_DIR)/libs/libz.1.2.5.dylib \
-	$(KMC_TOOLS_DIR)/libs/libbz2.1.0.5.dylib
+	#KMC_TOOLS_LIBS = \
+	#$(KMC_TOOLS_DIR)/libs/libz.1.2.5.dylib \
+	#$(KMC_TOOLS_DIR)/libs/libbz2.1.0.5.dylib
 
 	LIB_KMC_CORE = $(OUT_BIN_DIR)/libkmc_core.a
 else

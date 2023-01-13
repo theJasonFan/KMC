@@ -11,12 +11,16 @@
 #ifndef _INTR_COPY_H
 #define _INTR_COPY_H
 
+#define SIMDE_ENABLE_NATIVE_ALIASES
+#include "simde/x86/sse2.h" // emmintrin.h
+// #include "simde/"
+
 #ifdef _WIN32
 #include <intrin.h>
 #endif
 
-#include <emmintrin.h>
-#include <immintrin.h>
+// #include <emmintrin.h>
+// #include <immintrin.h>
 #include "critical_error_handler.h"
 
 #ifndef _WIN32

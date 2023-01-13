@@ -15,8 +15,10 @@
 #include "params.h"
 #include <stdio.h>
 
-#include "libs/zlib.h"
-#include "libs/bzlib.h"
+//#include "libs/zlib.h"
+//#include "libs/bzlib.h"
+#include <bzlib.h>
+#include <zlib.h>
 
 using namespace std;
 
