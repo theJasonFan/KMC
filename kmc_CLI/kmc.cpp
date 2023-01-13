@@ -1,5 +1,7 @@
 #define _CRT_SECURE_NO_WARNINGS
 #include "../kmc_core/kmc_runner.h"
+#include <random>
+#include <algorithm>
 #include <cstring>
 #include <iostream>
 #include <fstream>
@@ -246,6 +248,9 @@ bool parse_parameters(int argc, char* argv[], Params& params)
 		stage2Params.SetOutputFileName(argv[i++]);
 	stage1Params.SetTmpPath(argv[i++]);
 
+	std::random_device rd;
+	std::mt19937 g(rd());
+
 	std::vector<std::string> input_file_names;	
 	if (input_file_name[0] != '@')
 		input_file_names.push_back(input_file_name);
@@ -264,7 +269,7 @@ bool parse_parameters(int argc, char* argv[], Params& params)
 				input_file_names.push_back(s);
 
 		in.close();
-		std::random_shuffle(input_file_names.begin(), input_file_names.end());
+		std::shuffle(input_file_names.begin(), input_file_names.end(), g);
 	}
 	stage1Params.SetInputFiles(input_file_names);
 

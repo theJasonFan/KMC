@@ -8,6 +8,7 @@
   Date   : 2022-01-04
 */
 
+
 #ifndef _DEFS_H
 #define _DEFS_H
 
@@ -31,6 +32,7 @@
 //#define USE_META_PROG
 
 #define COMPACT_CUMSUM_PART_SIZE (1<<10)
+
 
 #define KMER_X		3
 
@@ -66,6 +68,7 @@
 #define MAX_SR		128
 
 //Range of number of sorter threads pre sorter in strict memory mode
+
 #define MIN_SMSO	1
 #define MAX_SMSO	16
 
@@ -109,8 +112,8 @@ using uint64 = uint64_t;
 #include <string.h>
 
 #include <stdio.h>
-#include <ext/algorithm>
-using __gnu_cxx::copy_n;
+#include <algorithm>
+//using __gnu_cxx::copy_n;
 
 #endif
 

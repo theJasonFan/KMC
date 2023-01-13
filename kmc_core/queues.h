@@ -11,6 +11,8 @@
 #ifndef _QUEUES_H
 #define _QUEUES_H
 
+#include <algorithm>
+#include <random>
 #include "defs.h"
 #include <stdio.h>
 #include <tuple>
@@ -571,6 +573,9 @@ public:
 	void init_random()
 	{
 		lock_guard<mutex> lck(mtx);
+	        std::random_device rd;
+		std::mt19937 g(rd());
+ 
 		vector<pair<int32, int64>> bin_sizes;
 
 		for (auto& p : m)
@@ -589,7 +594,7 @@ public:
 		for (uint32 i = no_sort_end; i < bin_sizes.size(); ++i)
 			random_bins.push_back(bin_sizes[i].first);
 
-		random_shuffle(random_bins.begin(), random_bins.end());
+		shuffle(random_bins.begin(), random_bins.end(), g);
 
 		for (uint32 i = no_sort_start; i < no_sort_end; ++i)
 			random_bins.push_back(bin_sizes[i].first);
