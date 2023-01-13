@@ -103,8 +103,19 @@ $(KMC_TOOLS_DIR)/fastq_writer.o \
 $(KMC_TOOLS_DIR)/percent_progress.o \
 $(KMC_TOOLS_DIR)/kff_info_reader.o
 
+SIMDE_DIR = $(KMC_MAIN_DIR)/simde
 
-$(KMC_CLI_OBJS) $(KMC_CORE_OBJS) $(KMC_DUMP_OBJS) $(KMC_API_OBJS) $(KFF_OBJS) $(KMC_TOOLS_OBJS): %.o: %.cpp
+# Download amalgamated SIMDE library
+$(SIMDE_DIR):
+	curl -k -L https://github.com/simd-everywhere/simde/releases/download/v0.7.2/simde-amalgamated-0.7.2.tar.xz -o $(KMC_MAIN_DIR)/simde-amalgamated-0.7.2.tar.xz && \
+    tar -C $(KMC_MAIN_DIR) -xvf $(KMC_MAIN_DIR)/simde-amalgamated-0.7.2.tar.xz && \
+	rm  $(KMC_MAIN_DIR)/simde-amalgamated-0.7.2.tar.xz && \
+	mv $(KMC_MAIN_DIR)/simde-amalgamated-0.7.2 $@
+
+$(KMC_CLI_OBJS) $(KMC_DUMP_OBJS) $(KMC_API_OBJS) $(KFF_OBJS) $(KMC_TOOLS_OBJS): %.o: %.cpp
+	$(CC) $(CFLAGS) -c $< -o $@
+
+$(KMC_CORE_OBJS): %.o: %.cpp $(SIMDE_DIR)
 	$(CC) $(CFLAGS) -c $< -o $@
 
 $(KMC_MAIN_DIR)/raduls_sse2.o: $(KMC_MAIN_DIR)/raduls_sse2.cpp
@@ -121,6 +132,10 @@ $(LIB_KMC_CORE): $(KMC_CORE_OBJS) $(RADULS_OBJS) $(KMC_API_OBJS) $(KFF_OBJS)
 	cp $(KMC_MAIN_DIR)/kmc_runner.h $(OUT_INCLUDE_DIR)/kmc_runner.h
 	-mkdir -p $(OUT_BIN_DIR)
 	ar rcs $@ $^
+
+simde: $(SIMDE_DIR)
+
+kmc_core: $(KMC_CORE_OBJS)
 
 kmc: $(KMC_CLI_OBJS) $(LIB_KMC_CORE)
 	-mkdir -p $(OUT_BIN_DIR)
@@ -147,6 +162,7 @@ py_kmc_api: $(PY_KMC_API_OBJS) $(PY_KMC_API_OBJS)
 
 clean:
 	-rm -f $(KMC_MAIN_DIR)/*.o
+	-rm -rf $(SIMDE_DIR)
 	-rm -f $(KMC_API_DIR)/*.o
 	-rm -f $(KMC_DUMP_DIR)/*.o
 	-rm -f $(KMC_TOOLS_DIR)/*.o

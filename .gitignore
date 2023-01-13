@@ -1,6 +1,7 @@
 _*
 include/
 kmc_core/simde
+*.vcxproj*
 
 # Windows image file caches
 Thumbs.db
