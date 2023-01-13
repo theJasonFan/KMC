@@ -13,12 +13,12 @@ OUT_BIN_DIR = bin
 OUT_INCLUDE_DIR = include
 
 ifeq ($(UNAME_S),Darwin)
-	CFLAGS	= -Wall -O3 -m64 -pthread -std=c++14
+	CFLAGS	= -Wall -O3 -m64 -pthread -std=c++14 -fPIC 
 	CLINK	= -lm -lbz2 -lc++ -lz -O3 -pthread -std=c++14
 
 	PY_KMC_API_CFLAGS = -Wl,-undefined,dynamic_lookup -fPIC -Wall -shared -std=c++14 -O3
 else
-	CFLAGS	= -Wall -O3 -m64 -static -Wl,--whole-archive -lpthread -Wl,--no-whole-archive -std=c++14
+	CFLAGS	= -Wall -O3 -m64 -static -Wl,--whole-archive -lpthread -Wl,--no-whole-archive -std=c++14 -fPIC
 	CLINK	= -lm -static -O3 -Wl,--whole-archive -lpthread -Wl,--no-whole-archive -std=c++14
 
 	PY_KMC_API_CFLAGS = -fPIC -Wall -shared -std=c++14 -O3
