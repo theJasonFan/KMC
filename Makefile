@@ -15,7 +15,6 @@ OUT_INCLUDE_DIR = include
 ifeq ($(UNAME_S),Darwin)
 	CFLAGS	= -Wall -O3 -m64 -pthread -std=c++14
 	CLINK	= -lm -lbz2 -lc++ -lz -O3 -pthread -std=c++14
-	# CLINK	= -lm -static-libgcc -static-libstdc++ -O3 -pthread -std=c++14
 
 	PY_KMC_API_CFLAGS = -Wl,-undefined,dynamic_lookup -fPIC -Wall -shared -std=c++14 -O3
 else

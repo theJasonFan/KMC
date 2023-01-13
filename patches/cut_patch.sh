@@ -8,4 +8,4 @@
 #
 # Usage
 # cut_patch.sh <output>
-git diff v3.2.1 -- **/*.h **/*.c **/*.cpp Makefile > $1
+git diff v3.2.1 -- ../**/*.h ../**/*.cpp ../Makefile > $1
