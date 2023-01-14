@@ -1,5 +1,5 @@
 diff --git a/Makefile b/Makefile
-index bc07d35..5d20bc9 100644
+index bc07d35..b4797bb 100644
 --- a/Makefile
 +++ b/Makefile
 @@ -13,16 +13,12 @@ OUT_BIN_DIR = bin
@@ -66,13 +66,20 @@ index bc07d35..5d20bc9 100644
  	$(CC) $(CFLAGS) -c $< -o $@
  
  $(KMC_MAIN_DIR)/raduls_sse2.o: $(KMC_MAIN_DIR)/raduls_sse2.cpp
-@@ -125,6 +132,10 @@ $(LIB_KMC_CORE): $(KMC_CORE_OBJS) $(RADULS_OBJS) $(KMC_API_OBJS) $(KFF_OBJS)
+@@ -119,12 +126,16 @@ $(KMC_MAIN_DIR)/raduls_avx.o: $(KMC_MAIN_DIR)/raduls_avx.cpp
+ $(KMC_MAIN_DIR)/raduls_avx2.o: $(KMC_MAIN_DIR)/raduls_avx2.cpp
+ 	$(CC) $(CFLAGS) -mavx2 -c $< -o $@
+ 
+-$(LIB_KMC_CORE): $(KMC_CORE_OBJS) $(RADULS_OBJS) $(KMC_API_OBJS) $(KFF_OBJS)
++$(LIB_KMC_CORE): $(SIMDE_DIR) $(KMC_CORE_OBJS) $(RADULS_OBJS) $(KMC_API_OBJS) $(KFF_OBJS)
+ 	-mkdir -p $(OUT_INCLUDE_DIR)
+ 	cp $(KMC_MAIN_DIR)/kmc_runner.h $(OUT_INCLUDE_DIR)/kmc_runner.h
  	-mkdir -p $(OUT_BIN_DIR)
  	ar rcs $@ $^
  
 +simde: $(SIMDE_DIR)
 +
-+kmc_core: $(KMC_CORE_OBJS)
++kmc_core: $(KMC_CORE_OBJS) 
 +
  kmc: $(KMC_CLI_OBJS) $(LIB_KMC_CORE)
  	-mkdir -p $(OUT_BIN_DIR)
